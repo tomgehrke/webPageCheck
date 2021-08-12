@@ -34,6 +34,17 @@ pageList+=("Google
 https://www.google.com
 <title>Google</title>
 ")
+
+pageList+=("MSN
+https://www.msn.com
+<title>MSN
+")
+
+pageList+=("Github webPageCheck Repository
+https://github.com/tomgehrke/webPageCheck
+tomgehrke/webPageCheck
+")
+
 # ---------------------------------------------------------------------------
 # Switch Variables
 verbose=0
@@ -61,7 +72,7 @@ lastColumnWidth=8
 firstColumnWidth=$((totalWidth-lastColumnWidth))
 
 pass="${GREEN} UP  ${NOCOLOR}"
-warn="${YELLOW}MAINT ${NOCOLOR}"
+warn="${YELLOW}MAINT${NOCOLOR}"
 fail="${RED}DOWN!${NOCOLOR}"
 leader=''
 
@@ -147,10 +158,10 @@ generateReport(){
                     echo ----
                 fi
 
-                if [[ "$response" =~ "$regexSuccess" ]]; then
+                if [[ "$regexSuccess" != "" && "$response" =~ "$regexSuccess" ]]; then
                     status=$pass
                 else
-                    if [[ "$response" =~ "$regexMaint" ]]; then
+                    if [[ "$regexMaint" != "" && "$response" =~ "$regexMaint" ]]; then
                         status=$warn
                     else
                         # Before failing, check to see if page is redirecting to
@@ -207,6 +218,8 @@ generateReport(){
             fi
         fi
     done
+
+    echo ""
 
     # Reset case sensitivity
     shopt -u nocasematch
